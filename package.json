@@ -1,0 +1,18 @@
+{
+  "name": "oshi",
+  "description": "WORK IN PROGRESS. A scripting-based process manager for node.js.",
+  "version": "0.0.1",
+  "author": "Bret Copeland <bret@atlantisflight.org>",
+  "main": "./lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bretcope/oshi.git"
+  },
+  "dependencies": {
+    "axon-rpc": "0.0.3",
+    "axon": "2.0.0",
+    "odyssey": "0.1.0",
+    "flex-events": "0.1.0"
+  },
+  "license": "MIT"
+}
