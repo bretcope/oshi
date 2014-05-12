@@ -11,8 +11,14 @@
   "dependencies": {
     "axon-rpc": "0.0.3",
     "axon": "2.0.0",
-    "odyssey": "0.1.0",
     "flex-events": "0.1.0"
+  },
+  "devDependencies": {
+    "mocha": "1.18.2",
+    "odyssey": "0.1.0"
+  },
+  "scripts": {
+    "test": "mocha"
   },
   "license": "MIT"
 }
