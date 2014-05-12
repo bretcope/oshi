@@ -3,41 +3,6 @@
 var athena = require('odyssey').athena;
 var Oshi = require('../lib');
 
-//var client, sock;
-//athena.waterfall
-//(
-//	[
-//		function (cb)
-//		{
-//			oshi.start(cb);
-//		},
-//		function (cb, s)
-//		{
-//			sock = s;
-//			client = new Rpc.Client(sock);
-//			client.call('status', cb);
-//		},
-//		function (cb, status)
-//		{
-//			console.log(status);
-//			cb();
-//		}
-//	],
-//	function (hlog)
-//	{
-//		if (client)
-//		{
-//			client.call('kill', console.log);
-//			sock.close();
-//		}
-//		
-//		if (hlog.failed)
-//			throw hlog;
-//		
-//		console.log('done');
-//	}
-//);
-
 var api;
 athena.waterfall
 (
