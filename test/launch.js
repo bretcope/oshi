@@ -38,6 +38,11 @@ athena.waterfall
 			console.log('stopped');
 			console.log(res);
 			
+			api.version(cb);
+		},
+		function (cb, version)
+		{
+			console.log(version);
 			cb();
 		}
 	],
