@@ -1,35 +1,30 @@
 "use strict";
 
 var assert = require('assert');
+var Common = require('./helpers/common');
 var Oshi = require('..');
+var Package = require('../package.json');
 
 suite('Basic Functionality', function ()
 {
-	var api;
 	var group1, group2;
 	var instances = {};
 	
-	suiteSetup(function (done)
+	suiteSetup(Common.suiteSetup);
+	suiteTeardown(Common.suiteTeardown);
+	
+	test('Check version', function (done)
 	{
-//		new Oshi.Daemon(new Oshi.Config.HostConfig()); // uncomment this, and comment the suiteTeardown to run the daemon inside the same process as the tests
-		Oshi.Api.createApi(function (error, a)
+		Common.api.version(function (error, version)
 		{
-			api = a;
+			assert(version === Package.version);
 			done(error);
 		});
 	});
 	
-	suiteTeardown(function (done)
-	{
-		if (api)
-			api.kill(done);
-		else
-			done();
-	});
-	
 	test('Prepare group A', function (done)
 	{
-		api.prepare('test/helpers/simple-test-app.js', function (error, g)
+		Common.api.prepare('test/helpers/simple-test-app.js', function (error, g)
 		{
 			if (!error)
 			{
@@ -43,7 +38,7 @@ suite('Basic Functionality', function ()
 	
 	test('Launch instance A1', function (done)
 	{
-		api.start('simple-test-app:5107', function (error, info)
+		Common.api.start('simple-test-app:5107', function (error, info)
 		{
 			if (!error)
 			{
@@ -60,7 +55,7 @@ suite('Basic Functionality', function ()
 	
 	test('Launch instance A2', function (done)
 	{
-		api.start('simple-test-app:5108', function (error, info)
+		Common.api.start('simple-test-app:5108', function (error, info)
 		{
 			if (!error)
 			{
@@ -84,7 +79,7 @@ suite('Basic Functionality', function ()
 			readyEvent: 'good to go!'
 		});
 		
-		api.prepare(conf, function (error, g)
+		Common.api.prepare(conf, function (error, g)
 		{
 			if (!error)
 			{
@@ -98,7 +93,7 @@ suite('Basic Functionality', function ()
 	
 	test('Launch instance B1', function (done)
 	{
-		api.start('group 2:5117', function (error, info)
+		Common.api.start('group 2:5117', function (error, info)
 		{
 			if (!error)
 			{
@@ -117,7 +112,7 @@ suite('Basic Functionality', function ()
 	{
 		var ins = instances.A2;
 		delete instances.A2;
-		api.stop(ins.group + ':' + ins.port, function (error, info)
+		Common.api.stop(ins.group + ':' + ins.port, function (error, info)
 		{
 			if (!error)
 				assert(info.stopped === true);
@@ -138,7 +133,7 @@ suite('Basic Functionality', function ()
 			{
 				var ins = instances[keys[i]];
 				i++;
-				api.stop(ins, function (error, info)
+				Common.api.stop(ins, function (error, info)
 				{
 					if (error)
 					{
