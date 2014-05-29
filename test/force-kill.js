@@ -4,7 +4,6 @@ var assert = require('assert');
 var Athena = require('odyssey').athena;
 var Common = require('./helpers/common');
 var Oshi = require('..');
-var Package = require('../package.json');
 
 suite('Force Kill', function ()
 {
