@@ -9,9 +9,10 @@
     "url": "https://github.com/bretcope/oshi.git"
   },
   "dependencies": {
-    "axon-rpc": "0.0.3",
     "axon": "2.0.0",
-    "flex-events": "0.1.1"
+    "axon-rpc": "0.0.3",
+    "flex-events": "0.1.1",
+    "neo-debug": "0.0.1"
   },
   "devDependencies": {
     "mocha": "1.18.2",
