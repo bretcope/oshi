@@ -70,6 +70,18 @@ suite('Basic Functionality', function ()
 		});
 	});
 	
+	test('Check status for instance A1', function (done)
+	{
+		Common.api.status('simple-test-app:5107', function (error, info)
+		{
+			assert(!error, error);
+			assert(info.statusText === 'RUNNING');
+			assert(info.statusCode === Oshi.Enums.STATUS.RUNNING);
+			
+			done();
+		});
+	});
+	
 	test('Prepare group B (with config)', function (done)
 	{
 		var conf = new Oshi.Config.GroupConfig({
