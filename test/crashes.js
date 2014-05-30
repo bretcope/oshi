@@ -14,6 +14,7 @@ suite('Crashes', function ()
 
 	test('Immediate Crash should not try to restart', function (done)
 	{
+		var options;
 		Athena.waterfall
 		(
 			[
@@ -24,7 +25,7 @@ suite('Crashes', function ()
 				function (cb, g)
 				{
 					group = g.config;
-					var options =
+					options =
 					{
 						group: group.name,
 						port: 6002
@@ -35,6 +36,12 @@ suite('Crashes', function ()
 				{
 					assert(response.started === false);
 					assert(response.crashed === true);
+					
+					Common.api.status(options, cb);
+				},
+				function (cb, response)
+				{
+					assert(response.statusText === 'STOPPED');
 					cb();
 				}
 			],
@@ -88,6 +95,7 @@ suite('Crashes', function ()
 
 	test('Delayed Crash should emit unhandled event', function (done)
 	{
+		var options, statusCallback;
 		Athena.waterfall
 		(
 			[
@@ -98,11 +106,11 @@ suite('Crashes', function ()
 				function (cb, g)
 				{
 					group = g.config;
-					var options =
+					options =
 					{
 						group: group.name,
 						port: 6002,
-						args: ['--delay', 400]
+						args: ['--time', Date.now() + 500]
 					};
 					Common.api.start(options, function (error, response)
 					{
@@ -121,9 +129,25 @@ suite('Crashes', function ()
 						assert(data.code === 1);
 						
 						Common.api.removeListener(exitHandler);
-						
-						cb();
+
+						statusCallback = cb;
+						Common.api.status(options, cb);
 					}
+				},
+				function (cb, response)
+				{
+					if (response.statusText === 'STARTING')
+					{
+						cb.enableReinvoke();
+						setTimeout(function ()
+						{
+							Common.api.status(options, statusCallback);
+						}, 20);
+						return;
+					}
+					
+					assert(response.statusText === 'RUNNING', 'Process should have been restarted after crash. Status was ' + response.statusText);
+					cb();
 				}
 			],
 			function (hlog)

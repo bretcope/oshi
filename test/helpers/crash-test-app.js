@@ -1,8 +1,17 @@
 
-var i = process.argv.indexOf('--delay');
+var i = process.argv.indexOf('--time');
 
-var delay = Number(process.argv[i + 1]);
-if (i === -1 || !delay)
-	delay = 0;
+var now = Date.now();
+var time = Number(process.argv[i + 1]) || now;
 
-setTimeout(function () { process.exit(1); }, delay);
+var delay = time - now;
+
+if (delay >= 0)
+{
+	setTimeout(function () { process.exit(1); }, delay);
+}
+else
+{
+	// if time was in the past, don't crash at all
+	setInterval(function () { console.log("yay, I'm alive"); }, 2000);
+}
