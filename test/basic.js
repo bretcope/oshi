@@ -46,7 +46,7 @@ suite('Basic Functionality', function ()
 				assert(info.restarted === false);
 				assert(info.ready === false);
 				
-				instances.A1 = info;
+				instances.A1 = info.config;
 			}
 			
 			done(error);
@@ -63,7 +63,7 @@ suite('Basic Functionality', function ()
 				assert(info.restarted === false);
 				assert(info.ready === false);
 				
-				instances.A2 = info;
+				instances.A2 = info.config;
 			}
 			
 			done(error);
@@ -84,7 +84,7 @@ suite('Basic Functionality', function ()
 	
 	test('Prepare group B (with config)', function (done)
 	{
-		var conf = new Oshi.Config.GroupConfig({
+		var conf = new Oshi.GroupConfig({
 			script: 'ready-test-app.js',
 			name: 'group 2',
 			cwd: require('path').join(__dirname, 'helpers'),
@@ -113,7 +113,7 @@ suite('Basic Functionality', function ()
 				assert(info.restarted === false);
 				assert(info.ready === true);
 				
-				instances.B1 = info;
+				instances.B1 = info.config;
 			}
 
 			done(error);
@@ -124,7 +124,7 @@ suite('Basic Functionality', function ()
 	{
 		var ins = instances.A2;
 		delete instances.A2;
-		Common.api.stop(ins.group + ':' + ins.port, function (error, info)
+		Common.api.stop(ins.groupName + ':' + ins.port, function (error, info)
 		{
 			if (!error)
 				assert(info.stopped === true);
