@@ -12,7 +12,7 @@ Common.api = null;
 Common.suiteSetup = function (done)
 {
 	if (IN_PROCESS && !daemon)
-		daemon = new Oshi.Daemon(new Oshi.Config.HostConfig());
+		daemon = new Oshi.Daemon(new Oshi.Config.DaemonConfig());
 
 	Oshi.Api.createApi(function (error, a)
 	{
