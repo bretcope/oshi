@@ -19,7 +19,7 @@ suite('Force Kill', function ()
 			[
 				function (cb)
 				{
-					group = new Oshi.Config.GroupConfig('test/helpers/force-kill-test-app.js');
+					group = new Oshi.GroupConfig('test/helpers/force-kill-test-app.js');
 					group.useMessageOnWindows = true;
 					group.gracefulTimeout = 200;
 					Common.api.prepare(group, cb);

@@ -14,7 +14,7 @@ suite('Crashes', function ()
 
 	test('Immediate Crash should not try to restart', function (done)
 	{
-		var options;
+		var conf;
 		Athena.waterfall
 		(
 			[
@@ -25,19 +25,15 @@ suite('Crashes', function ()
 				function (cb, g)
 				{
 					group = g.config;
-					options =
-					{
-						group: group.name,
-						port: 6002
-					};
-					Common.api.start(options, cb);
+					conf = new Oshi.ChildConfig({ groupName: group.name, port: 6002 });
+					Common.api.start(conf, cb);
 				},
 				function (cb, response)
 				{
 					assert(response.started === false);
 					assert(response.crashed === true);
 					
-					Common.api.status(options, cb);
+					Common.api.status(conf, cb);
 				},
 				function (cb, response)
 				{
@@ -64,12 +60,8 @@ suite('Crashes', function ()
 				function (cb, g)
 				{
 					group = g.config;
-					var options =
-					{
-						group: group.name,
-						port: 6002
-					};
-					Common.api.start(options, function () {});
+					var conf = new Oshi.ChildConfig({ groupName: group.name, port: 6002 });
+					Common.api.start(conf, function () {});
 					
 					Common.api.on('exit', { handled: true }, exitHandler);
 					
@@ -95,7 +87,7 @@ suite('Crashes', function ()
 
 	test('Delayed Crash should emit unhandled event', function (done)
 	{
-		var options, statusCallback;
+		var conf, statusCallback;
 		Athena.waterfall
 		(
 			[
@@ -106,13 +98,8 @@ suite('Crashes', function ()
 				function (cb, g)
 				{
 					group = g.config;
-					options =
-					{
-						group: group.name,
-						port: 6002,
-						args: ['--time', Date.now() + 500]
-					};
-					Common.api.start(options, function (error, response)
+					conf = new Oshi.ChildConfig({ groupName: group.name, port: 6002, args: ['--time', Date.now() + 500] });
+					Common.api.start(conf, function (error, response)
 					{
 						assert(!error, error);
 						assert(response.started);
@@ -131,7 +118,7 @@ suite('Crashes', function ()
 						Common.api.removeListener(exitHandler);
 
 						statusCallback = cb;
-						Common.api.status(options, cb);
+						Common.api.status(conf, cb);
 					}
 				},
 				function (cb, response)
@@ -141,7 +128,7 @@ suite('Crashes', function ()
 						cb.enableReinvoke();
 						setTimeout(function ()
 						{
-							Common.api.status(options, statusCallback);
+							Common.api.status(conf, statusCallback);
 						}, 20);
 						return;
 					}
