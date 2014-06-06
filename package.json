@@ -1,10 +1,13 @@
 {
   "name": "oshi",
   "description": "WORK IN PROGRESS. A scripting-based process manager for node.js.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Bret Copeland <bret@atlantisflight.org>",
   "contributors": [
-    { "name": "Bryan Ross", "url": "https://github.com/rossipedia" }
+    {
+      "name": "Bryan Ross",
+      "url": "https://github.com/rossipedia"
+    }
   ],
   "main": "./lib/index.js",
   "repository": {
