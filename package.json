@@ -12,7 +12,6 @@
     "url": "https://github.com/bretcope/oshi.git"
   },
   "dependencies": {
-    "axon-rpc": "0.0.3",
     "amp": "0.3.1",
     "axon": "2.0.0",
     "flex-events": "0.1.1",
