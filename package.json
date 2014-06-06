@@ -3,6 +3,9 @@
   "description": "WORK IN PROGRESS. A scripting-based process manager for node.js.",
   "version": "0.0.1",
   "author": "Bret Copeland <bret@atlantisflight.org>",
+  "contributors": [
+    { "name": "Bryan Ross", "url": "https://github.com/rossipedia" }
+  ],
   "main": "./lib/index.js",
   "repository": {
     "type": "git",
@@ -12,7 +15,6 @@
     "axon-rpc": "0.0.3",
     "amp": "0.3.1",
     "axon": "2.0.0",
-    "axon-rpc": "0.0.3",
     "flex-events": "0.1.1",
     "debug": "1.0.0"
   },
