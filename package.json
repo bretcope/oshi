@@ -18,12 +18,12 @@
     "amp": "0.3.1",
     "axon": "2.0.0",
     "axon-rpc": "0.0.3",
-    "debug": "1.0.0",
+    "debug": "1.0.2",
     "flex-events": "0.1.1",
     "mkdirp": "^0.5.0"
   },
   "devDependencies": {
-    "mocha": "1.18.2",
+    "mocha": "1.20.1",
     "odyssey": "0.1.0"
   },
   "scripts": {
