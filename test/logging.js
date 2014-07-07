@@ -1,8 +1,8 @@
-
 "use strict";
 
 var assert = require('assert');
 var Common = require('./helpers/common');
+var debug = require('debug')('oshi-test:logging');
 var Oshi = require('..');
 var Package = require('../package.json');
 var Path = require('path');
@@ -34,6 +34,7 @@ function clearLogFiles()
 	{
 		try
 		{
+			debug('deleting %s', file);
 			Fs.unlinkSync(Path.resolve('logs', file));
 		}
 		catch (e) { /* don't bother */ }
@@ -55,9 +56,27 @@ suite('Log files', function ()
 		{
 			if (error) return done(error);
 			
-			assert(Fs.existsSync(Path.resolve('logs', 'simple-test-app_5107.out.log')));
-			assert(Fs.existsSync(Path.resolve('logs', 'simple-test-app_5107.err.log')));
+			assert(Fs.existsSync(Path.resolve('logs', 'simple-test-app_5107.out.log')), 'Out log does not exist');
+			assert(Fs.existsSync(Path.resolve('logs', 'simple-test-app_5107.err.log')), 'Err log does not exist');
 			
+			done();
+		});
+	});
+
+	test('Can rotate log files', function (done)
+	{
+		Common.api.rotateLogs('simple-test-app:5107', function (error, info)
+		{
+			if (error) return done(error);
+
+			assert(Fs.existsSync(Path.resolve('logs', 'simple-test-app_5107.out.log')), 'Out log does not exist');
+			assert(Fs.existsSync(Path.resolve('logs', 'simple-test-app_5107.err.log')), 'Err log does not exist');
+
+			debug(info);
+
+			assert(Fs.existsSync(info.out), 'Rotated out log does not exist');
+			assert(Fs.existsSync(info.err), 'Rotated err log does not exist');
+
 			done();
 		});
 	});
