@@ -2,6 +2,7 @@
 
 var assert = require('assert');
 var Common = require('./helpers/common');
+var debug = require('debug')('oshi-test:basic');
 var Oshi = require('..');
 var Package = require('../package.json');
 
@@ -78,6 +79,32 @@ suite('Basic Functionality', function ()
 			assert(info.statusText === 'RUNNING');
 			assert(info.statusCode === Oshi.Enums.STATUS.RUNNING);
 			
+			done();
+		});
+	});
+
+	test('Check A1 shows up in list', function (done)
+	{
+		Common.api.list(function (error, info)
+		{
+			assert(!error, error);
+
+			assert(info.groups['simple-test-app'] !== undefined, 'simple-test-app not key of list response');
+			assert(info.groups['simple-test-app'].indexOf('5107') !== -1, 'port 5107 not in list of ports for simple-test-app');
+
+			done();
+		});
+	});
+
+	test('Check A2 shows up in list', function (done)
+	{
+		Common.api.list(function (error, info)
+		{
+			assert(!error, error);
+
+			assert(info.groups['simple-test-app'] !== undefined, 'simple-test-app not key of list response');
+			assert(info.groups['simple-test-app'].indexOf('5108') !== -1, 'port 5108 not in list of ports for simple-test-app');
+
 			done();
 		});
 	});
