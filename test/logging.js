@@ -50,7 +50,7 @@ suite('Log files', function ()
 	suiteSetup(clearLogFiles);
 	suiteTeardown(clearLogFiles);
 
-	test('Process creates log file', function (done)
+	test('exist', function (done)
 	{
 		prepareAndStart('test/helpers/simple-test-app.js', 'simple-test-app:5107', function (error, info)
 		{
@@ -63,19 +63,14 @@ suite('Log files', function ()
 		});
 	});
 
-	test('Can rotate log files', function (done)
+	test('can be rotated', function (done)
 	{
 		Common.api.rotateLogs('simple-test-app:5107', function (error, info)
 		{
 			if (error) return done(error);
 
-			assert(Fs.existsSync(Path.resolve('logs', 'simple-test-app_5107.out.log')), 'Out log does not exist');
-			assert(Fs.existsSync(Path.resolve('logs', 'simple-test-app_5107.err.log')), 'Err log does not exist');
-
-			debug(info);
-
-			assert(Fs.existsSync(info.out), 'Rotated out log does not exist');
-			assert(Fs.existsSync(info.err), 'Rotated err log does not exist');
+			assert(Fs.existsSync(info.out), 'Rotated out log does not exist: ' + info.out);
+			assert(Fs.existsSync(info.err), 'Rotated err log does not exist: ' + info.err);
 
 			done();
 		});
