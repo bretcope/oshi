@@ -8,25 +8,6 @@ var Package = require('../package.json');
 var Path = require('path');
 var Fs = require('fs');
 
-function prepareAndStart(script, group, callback)
-{
-	Common.api.prepare(script, function (error, g)
-	{
-		if (error) return callback(error);
-
-		Common.api.start(group, function (error, info)
-		{
-			if (error) return callback(error);
-
-			assert(info.started === true);
-			assert(info.restarted === false);
-			assert(info.ready === false);
-
-			callback(null, info);
-		});
-	});
-}
-
 function clearLogFiles()
 {
 	var files = Fs.readdirSync(Path.resolve('logs'));
@@ -52,7 +33,7 @@ suite('Log files', function ()
 
 	test('exist', function (done)
 	{
-		prepareAndStart('test/helpers/simple-test-app.js', 'simple-test-app:5107', function (error, info)
+		Common.prepareAndStart('test/helpers/simple-test-app.js', 'simple-test-app:5107', function (error, info)
 		{
 			if (error) return done(error);
 			

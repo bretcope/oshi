@@ -1,5 +1,6 @@
 "use strict";
 
+var assert = require('assert');
 var Oshi = require('../..');
 
 var daemon = null;
@@ -29,4 +30,23 @@ Common.suiteTeardown = function (done)
 		api.kill(done);
 	else
 		done();
+};
+
+Common.prepareAndStart = function (script, group, callback)
+{
+	Common.api.prepare(script, function (error, g)
+	{
+		if (error) return callback(error);
+
+		Common.api.start(group, function (error, info)
+		{
+			if (error) return callback(error);
+
+			assert(info.started === true);
+			assert(info.restarted === false);
+			assert(info.ready === false);
+
+			callback(null, info);
+		});
+	});
 };
