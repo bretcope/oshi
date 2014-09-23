@@ -100,9 +100,6 @@ suite('Process Info', function ()
 
 			assert('cpu' in i1, 'cpu property not found');
 			assert('memory' in i1, 'memory property not found');
-
-			assert(typeof i1.cpu === 'number', 'cpu property is not a number (' + (typeof i1.cpu) + ' instead)');
-			assert(typeof i1.memory === 'number', 'memory property is not a number (' + (typeof i1.memory) + ' instead)');
 		});
 	});
 
