@@ -1,7 +1,7 @@
 {
   "name": "oshi",
   "description": "WORK IN PROGRESS. A scripting-based process manager for node.js.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "Bret Copeland <bret@atlantisflight.org>",
   "contributors": [
     {
