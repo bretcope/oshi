@@ -77,25 +77,18 @@ suite('Process Info', function ()
 		
 		infoTest('returns info object', name, function (info)
 		{
-			debug('info: %j', info);
 			assert(!!info, 'info object not returned');
 		});
 
 		infoTest('info object has group', name, function (info)
 		{
-			assert('simple-test-app' in info, 'expected group not found');
-			assert(typeof info['simple-test-app'] === 'object', 'group name property is not object');
-		});
-
-		infoTest('group object has port', name, function (info)
-		{
-			var g1 = info['simple-test-app'];
-			assert('5107' in g1, 'port number not in group object');
+			assert('simple-test-app:5107' in info, 'expected group not found');
+			assert(typeof info['simple-test-app:5107'] === 'object', 'group name property is not object');
 		});
 
 		infoTest('info object looks right', name, function (info)
 		{
-			var i1 = info['simple-test-app']['5107'];
+			var i1 = info['simple-test-app:5107'];
 			assert(typeof i1 === 'object', 'info member is not an object');
 
 			assert('cpu' in i1, 'cpu property not found');
@@ -115,18 +108,16 @@ suite('Process Info', function ()
 
 		infoTest('info object has all groups', names, function (info)
 		{
-			assert('simple-test-app' in info, 'simple-test-app not found');
-			assert('another-test-app' in info, 'another-test-app not found');
+			debug(info);
+			assert('simple-test-app:5107' in info, 'simple-test-app:5107 not found');
+			assert('simple-test-app:5108' in info, 'simple-test-app:5108 not found');
+			assert('another-test-app:5109' in info, 'another-test-app:5109 not found');
+			assert('another-test-app:5110' in info, 'another-test-app:5110 not found');
 
-			assert(typeof info['simple-test-app'] === 'object', 'simple-test-app name property is not object');
-			assert(typeof info['another-test-app'] === 'object', 'another-test-app property is not object');
-		});
-
-		infoTest('info object has all children', names, function (info)
-		{
-
-			assert(typeof info['simple-test-app'] === 'object', 'simple-test-app name property is not object');
-			assert(typeof info['another-test-app'] === 'object', 'another-test-app property is not object');
+			assert(typeof info['simple-test-app:5107'] === 'object', 'simple-test-app:5107 name property is not object');
+			assert(typeof info['simple-test-app:5108'] === 'object', 'simple-test-app:5108 name property is not object');
+			assert(typeof info['another-test-app:5109'] === 'object', 'another-test-app:5109 name property is not object');
+			assert(typeof info['another-test-app:5110'] === 'object', 'another-test-app:5110 name property is not object');
 		});
 	});
 	
